@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Ilustrasi sepeda listrik"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C81E1E"/><stop offset="1" stop-color="#F59A1B"/></linearGradient></defs><rect width="400" height="300" fill="url(#g)"/><circle cx="318" cy="78" r="92" fill="#fff" opacity=".10"/><circle cx="60" cy="250" r="70" fill="#000" opacity=".08"/><ellipse cx="200" cy="262" rx="150" ry="9" fill="#000" opacity=".22"/>
+<circle cx="106" cy="206" r="46" fill="none" stroke="#fff" stroke-width="8"/><circle cx="302" cy="206" r="46" fill="none" stroke="#fff" stroke-width="8"/>
+<path d="M106 206L184 144L266 144L302 206M184 144L206 212L266 144" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<rect x="190" y="164" width="56" height="20" rx="8" transform="rotate(-24 218 174)" fill="#FFD27A"/>
+<path d="M164 130H204M260 126L274 110H296" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M266 144L262 126" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<circle cx="206" cy="212" r="12" fill="#1F1412" stroke="#fff" stroke-width="5"/>
+<circle cx="106" cy="206" r="14" fill="#2A1815" stroke="#fff" stroke-width="5"/>
+<path d="M350 40L326 78H344L334 112L366 68H346Z" fill="#FFD27A"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Ilustrasi motor trail"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C81E1E"/><stop offset="1" stop-color="#F59A1B"/></linearGradient></defs><rect width="400" height="300" fill="url(#g)"/><circle cx="318" cy="78" r="92" fill="#fff" opacity=".10"/><circle cx="60" cy="250" r="70" fill="#000" opacity=".08"/><ellipse cx="200" cy="262" rx="150" ry="9" fill="#000" opacity=".22"/>
+<circle cx="104" cy="214" r="42" fill="#1F1412" stroke="#fff" stroke-width="9" stroke-dasharray="9 5"/><circle cx="104" cy="214" r="9" fill="#fff"/><circle cx="304" cy="214" r="42" fill="#1F1412" stroke="#fff" stroke-width="9" stroke-dasharray="9 5"/><circle cx="304" cy="214" r="9" fill="#fff"/>
+<path d="M92 156L162 150L168 164L98 172Z" fill="#2A1815"/>
+<path d="M150 152L218 140L242 162L164 174Z" fill="#fff"/>
+<rect x="170" y="172" width="66" height="34" rx="6" fill="#2A1815"/>
+<path d="M118 196L228 190" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+<path d="M104 214L180 194" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<path d="M290 120L312 210" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+<path d="M276 114L318 108" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<path d="M284 150Q322 128 352 152" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+<path d="M240 150L284 124" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "name": "wheelie",
+  "version": "1.6.0",
+  "private": true,
+  "scripts": {
+    "config": "node scripts/build-config.js",
+    "build": "node scripts/build-config.js --public",
+    "start": "node scripts/build-config.js && npx serve -l 3000 ."
+  }
+}

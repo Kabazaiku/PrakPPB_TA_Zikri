@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Ilustrasi motor sport"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B3141A"/><stop offset="1" stop-color="#EE5B17"/></linearGradient></defs><rect width="400" height="300" fill="url(#g)"/><circle cx="318" cy="78" r="92" fill="#fff" opacity=".10"/><circle cx="60" cy="250" r="70" fill="#000" opacity=".08"/><ellipse cx="200" cy="262" rx="150" ry="9" fill="#000" opacity=".22"/>
+<circle cx="100" cy="220" r="36" fill="#1F1412" stroke="#fff" stroke-width="9"/><circle cx="100" cy="220" r="10" fill="#fff"/><circle cx="306" cy="220" r="36" fill="#1F1412" stroke="#fff" stroke-width="9"/><circle cx="306" cy="220" r="10" fill="#fff"/>
+<path d="M80 168L152 150L176 168L96 182Z" fill="#fff"/>
+<path d="M130 166L214 128L274 138L312 176L262 196L168 198Z" fill="#fff"/>
+<path d="M268 138L318 166L306 180L262 160Z" fill="#FFD27A"/>
+<path d="M252 130L278 108L286 138Z" fill="#fff" opacity=".6"/>
+<rect x="176" y="184" width="72" height="32" rx="6" fill="#2A1815"/>
+<path d="M100 220L196 196" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<path d="M292 142L308 218" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+<path d="M258 126L292 120" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+<path d="M150 176H230" stroke="#D7261E" stroke-width="7" stroke-linecap="round"/>
+</svg>

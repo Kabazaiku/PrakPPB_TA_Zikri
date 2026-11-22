@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wheelie · Katalog Roda Dua</title>
+<meta name="description" content="Wheelie: katalog motor, sepeda, dan sepeda listrik.">
+<meta name="theme-color" content="#D7261E">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icons/icon.svg">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<script>/* Tangkap penawaran pemasangan sedini mungkin; dipakai js/install.js */
+window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); window.__bip = e; });</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <button id="back" class="icon-btn" aria-label="Kembali" hidden><i class="bi bi-chevron-left"></i></button>
+  <img class="mark" src="assets/icons/icon.svg" alt="" width="28" height="28">
+  <h1 id="title">Wheelie</h1>
+  <button id="install" class="install-btn" hidden><i class="bi bi-download"></i> Pasang</button>
+</header>
+
+<main id="app">
+  <p class="empty" id="loading">Memuat data…</p>
+
+  <!-- Beranda -->
+  <section class="page" id="page-home" hidden>
+    <p class="notice" id="demo-note" hidden><i class="bi bi-info-circle"></i> <span id="demo-note-text"></span></p>
+    <div class="stats" aria-label="Ringkasan katalog">
+      <div class="stat"><i class="bi bi-collection"></i><b id="stat-vehicles">0</b><span>Kendaraan</span></div>
+      <a class="stat" href="#/brands"><i class="bi bi-tags"></i><b id="stat-brands">0</b><span>Merek</span></a>
+    </div>
+    <div class="toolbar">
+      <div class="searchbox"><i class="bi bi-search"></i>
+        <label class="sr-only" for="q">Cari kendaraan</label>
+        <input class="input" id="q" type="search" placeholder="Cari kendaraan"></div>
+      <a class="btn" href="#/add"><i class="bi bi-plus-lg"></i><span>Tambah</span></a>
+    </div>
+    <div class="chips" role="group" aria-label="Kategori">
+      <button class="chip on" data-cat="Semua" aria-pressed="true">Semua</button>
+      <button class="chip" data-cat="Motor" aria-pressed="false"><i class="bi bi-speedometer2"></i> Motor</button>
+      <button class="chip" data-cat="Sepeda" aria-pressed="false"><i class="bi bi-bicycle"></i> Sepeda</button>
+      <button class="chip" data-cat="Sepeda Listrik" aria-pressed="false"><i class="bi bi-lightning-charge-fill"></i> Sepeda Listrik</button>
+    </div>
+    <div class="grid" id="vehicle-list"></div>
+    <p class="empty" id="home-empty" hidden>Tidak ada kendaraan yang cocok. Ubah kata kunci atau kategori.</p>
+    <div class="pager-slot" id="home-pager"></div>
+  </section>
+
+  <!-- Merek -->
+  <section class="page" id="page-brands" hidden>
+    <div class="grid grid-brand" id="brand-list"></div>
+    <div class="pager-slot" id="brands-pager"></div>
+  </section>
+
+  <!-- Detail kendaraan -->
+  <section class="page" id="page-vehicle" hidden>
+    <div id="v-content">
+      <div class="hero" id="v-hero" role="img" aria-label="Foto kendaraan"></div>
+      <div class="row">
+        <div><h2 data-b="title"></h2><span class="tag" data-b="category"></span> <span class="muted" data-b="type"></span></div>
+        <button class="fav" id="v-fav" aria-label="Favorit" aria-pressed="false"><i class="bi bi-heart"></i></button>
+      </div>
+      <p class="price big" data-b="price"></p>
+      <div class="specs" id="v-specs"></div>
+      <p data-b="description"></p>
+      <h2>Merek</h2>
+      <a class="item brand-item" id="v-brand" href="#/brands">
+        <div class="logo"><span class="logo-fb"></span><img alt="" hidden></div>
+        <div class="body"><h3 data-b="bname"></h3><div class="muted" data-b="bcountry"></div></div>
+        <i class="bi bi-chevron-right chev"></i>
+      </a>
+    </div>
+    <p class="empty" id="v-missing" hidden>Kendaraan tidak ditemukan. <a href="#/">Kembali ke katalog</a></p>
+  </section>
+
+  <!-- Detail merek -->
+  <section class="page" id="page-brand" hidden>
+    <div id="b-content">
+      <div class="card profile-head" id="b-head">
+        <div class="logo lg"><span class="logo-fb"></span><img alt="" hidden></div>
+        <div><h2 data-b="name"></h2><p class="muted" data-b="country"></p></div>
+      </div>
+      <p data-b="description"></p>
+      <h2>Model</h2>
+      <div class="grid" id="b-list"></div>
+      <p class="empty" id="b-empty" hidden>Belum ada model untuk merek ini.</p>
+      <div class="pager-slot" id="brand-pager"></div>
+    </div>
+    <p class="empty" id="b-missing" hidden>Merek tidak ditemukan. <a href="#/brands">Kembali</a></p>
+  </section>
+
+  <!-- Tambah kendaraan (dibuka dari tombol di Beranda) -->
+  <section class="page" id="page-add" hidden>
+    <form id="f" class="form">
+      <div class="field"><label for="n">Nama kendaraan</label><input class="input" id="n" required maxlength="80" placeholder="mis. Vario 160"></div>
+      <div class="field"><label for="b">Merek</label>
+        <select class="input" id="b"></select>
+        <div id="nb-box" hidden>
+          <input class="input" id="nb" maxlength="60" placeholder="Nama merek baru">
+          <label class="sub" for="nl">Logo merek (opsional, PNG/JPG/WebP)</label>
+          <input class="input" id="nl" type="file" accept="image/png,image/jpeg,image/webp">
+        </div></div>
+      <div class="field"><label for="c">Kategori</label>
+        <select class="input" id="c"><option>Motor</option><option>Sepeda</option><option>Sepeda Listrik</option></select></div>
+      <div class="field"><label for="t">Jenis</label><input class="input" id="t" required maxlength="30" placeholder="mis. Matic, MTB, Lipat"></div>
+      <div class="field"><label for="p">Harga (Rp)</label><input class="input" id="p" type="number" min="1" required inputmode="numeric"></div>
+      <div class="field"><label for="d">Deskripsi</label><textarea class="input" id="d" maxlength="500"></textarea></div>
+      <div class="field"><label>Spesifikasi</label><div id="specs"></div>
+        <button type="button" class="btn ghost" id="more"><i class="bi bi-plus-lg"></i> Tambah baris</button></div>
+      <fieldset class="field">
+        <legend>Gambar</legend>
+        <div class="ph-grid" id="ph-grid">
+        <label class="ph"><input type="radio" name="ph" value="" checked><span class="ph-auto"><i class="bi bi-stars"></i></span><b>Otomatis</b></label>
+        <label class="ph"><input type="radio" name="ph" value="assets/placeholders/motor-matic.svg"><img src="assets/placeholders/motor-matic.svg" alt=""><b>Motor matic</b></label>
+        <label class="ph"><input type="radio" name="ph" value="assets/placeholders/motor-sport.svg"><img src="assets/placeholders/motor-sport.svg" alt=""><b>Motor sport</b></label>
+        <label class="ph"><input type="radio" name="ph" value="assets/placeholders/motor-trail.svg"><img src="assets/placeholders/motor-trail.svg" alt=""><b>Motor trail</b></label>
+        <label class="ph"><input type="radio" name="ph" value="assets/placeholders/sepeda-gunung.svg"><img src="assets/placeholders/sepeda-gunung.svg" alt=""><b>Sepeda gunung</b></label>
+        <label class="ph"><input type="radio" name="ph" value="assets/placeholders/sepeda-lipat.svg"><img src="assets/placeholders/sepeda-lipat.svg" alt=""><b>Sepeda lipat</b></label>
+        <label class="ph"><input type="radio" name="ph" value="assets/placeholders/sepeda-listrik.svg"><img src="assets/placeholders/sepeda-listrik.svg" alt=""><b>Sepeda listrik</b></label>
+        </div>
+        <label class="sub" for="img">Atau unggah foto sendiri (JPG/PNG/WebP)</label>
+        <input class="input" id="img" type="file" accept="image/*">
+        <img id="pv" class="preview" alt="Pratinjau gambar" hidden>
+      </fieldset>
+      <button class="btn" id="save"><i class="bi bi-check2"></i> Simpan kendaraan</button>
+      <p class="muted" id="add-note"></p>
+    </form>
+  </section>
+
+  <!-- Profil pengguna (lokal) -->
+  <section class="page" id="page-profile" hidden>
+    <div class="card">
+      <div class="profile-head">
+        <div class="avatar" id="p-avatar">?</div>
+        <div><h2 id="p-name">Pengguna</h2><p class="muted" id="p-bio">Belum ada bio</p></div>
+      </div>
+      <div class="form">
+        <div class="field"><label for="pn">Nama</label><input class="input" id="pn" maxlength="40"></div>
+        <div class="field"><label for="pb">Bio singkat</label><input class="input" id="pb" maxlength="100"></div>
+        <button class="btn" id="ps"><i class="bi bi-check2"></i> Simpan profil</button>
+        <p class="muted"><i class="bi bi-phone"></i> Disimpan hanya di perangkat ini (localStorage), bukan di server.</p>
+      </div>
+    </div>
+    <h2>Favorit saya (<span id="fav-count">0</span>)</h2>
+    <div class="grid" id="fav-list"></div>
+    <p class="empty" id="fav-empty" hidden>Belum ada favorit.<br>Ketuk ikon hati di halaman detail, atau <a href="#/">lihat katalog</a>.</p>
+    <div class="pager-slot" id="fav-pager"></div>
+    <p><button class="btn danger" id="clr" hidden><i class="bi bi-trash"></i> Hapus semua favorit</button></p>
+  </section>
+
+  <!-- Tentang aplikasi -->
+  <section class="page" id="page-about" hidden>
+    <div class="card"><h2>Wheelie</h2>
+      <p>Katalog kendaraan roda dua: motor, sepeda, dan sepeda listrik. Cari kendaraan, bandingkan spesifikasi dan harganya, lalu simpan yang Anda suka.</p></div>
+
+    <h2>Yang bisa Anda lakukan</h2>
+    <ul class="feat">
+      <li><i class="bi bi-search"></i><div><b>Cari dan saring</b><span>Ketik nama kendaraan atau pilih kategori Motor, Sepeda, dan Sepeda Listrik di Beranda.</span></div></li>
+      <li><i class="bi bi-card-list"></i><div><b>Lihat detail</b><span>Harga, jenis, deskripsi, dan spesifikasi lengkap tiap kendaraan.</span></div></li>
+      <li><i class="bi bi-tags"></i><div><b>Jelajahi merek</b><span>Lihat semua model dari satu merek lewat halaman Merek.</span></div></li>
+      <li><i class="bi bi-heart"></i><div><b>Simpan favorit</b><span>Ketuk ikon hati di halaman detail. Favorit dan profil Anda tersimpan di perangkat ini, tanpa perlu akun.</span></div></li>
+      <li><i class="bi bi-plus-circle"></i><div><b>Tambah kendaraan</b><span>Gunakan tombol Tambah di Beranda untuk menambahkan kendaraan baru, lengkap dengan foto atau ilustrasi pilihan Anda.</span></div></li>
+      <li><i class="bi bi-wifi-off"></i><div><b>Tetap bisa dibuka offline</b><span>Setelah dibuka sekali, katalog tetap tampil tanpa internet.</span></div></li>
+    </ul>
+
+    <div class="card"><h2>Pasang aplikasi</h2>
+      <p id="inst-msg"></p>
+      <button class="btn" id="inst2" hidden><i class="bi bi-download"></i> Pasang sekarang</button>
+      <details class="tech"><summary>Detail teknis</summary><p class="muted" id="inst-diag"></p></details></div>
+  </section>
+</main>
+
+<nav class="bottom" aria-label="Navigasi utama">
+  <a href="#/" data-nav="home"><i class="bi bi-house-door"></i>Beranda</a>
+  <a href="#/brands" data-nav="brands"><i class="bi bi-tags"></i>Merek</a>
+  <a href="#/profile" data-nav="profile"><i class="bi bi-person"></i>Profil</a>
+  <a href="#/about" data-nav="about"><i class="bi bi-info-circle"></i>Tentang</a>
+</nav>
+<div id="toast" role="status"></div>
+
+<!-- Templat: JavaScript hanya menggandakan dan mengisi data -->
+<template id="tpl-vehicle">
+  <a class="item vcard"><div class="thumb" role="img" aria-label="Foto kendaraan"></div>
+    <div class="body"><h3 data-b="title"></h3>
+      <div class="muted"><span class="tag" data-b="category"></span> <span data-b="type"></span></div>
+      <div class="price" data-b="price"></div></div></a>
+</template>
+<template id="tpl-brand">
+  <a class="item bcard"><div class="logo lg"><span class="logo-fb"></span><img alt="" hidden></div>
+    <div class="body"><h3 data-b="name"></h3><div class="muted" data-b="country"></div><div class="muted" data-b="count"></div></div></a>
+</template>
+<template id="tpl-spec"><div><span class="muted" data-b="k"></span><b data-b="v"></b></div></template>
+<template id="tpl-specrow">
+  <div class="spec-row"><input class="input" placeholder="Nama (mis. Mesin)" maxlength="30" aria-label="Nama spesifikasi"><input class="input" placeholder="Nilai (mis. 155 cc)" maxlength="40" aria-label="Nilai spesifikasi"></div>
+</template>
+<template id="tpl-pager">
+  <nav class="pager" aria-label="Halaman">
+    <button class="pg" data-act="prev" aria-label="Sebelumnya"><i class="bi bi-chevron-left"></i></button>
+    <span class="pages" data-pages></span>
+    <button class="pg" data-act="next" aria-label="Berikutnya"><i class="bi bi-chevron-right"></i></button>
+  </nav>
+</template>
+<template id="tpl-page"><button class="pg"></button></template>
+<template id="tpl-gap"><span class="gap" aria-hidden="true">…</span></template>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
