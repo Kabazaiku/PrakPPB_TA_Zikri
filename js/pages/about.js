@@ -14,7 +14,7 @@ async function swState(){
 
 export function show(){
   const s = installStatus();
-  $("#inst-msg").textContent = s.msg; $("#inst2").hidden = s.state !== "ready";
+  $("#inst-msg").textContent = s.msg; $("#inst-help").textContent = s.help || ""; $("#inst-help").hidden = !s.help; $("#inst2").hidden = s.state !== "ready";
   const diag = sw => $("#inst-diag").textContent = `Diagnostik: ${browserName()} · koneksi aman ${isSecureContext ? "ya" : "tidak"} · service worker ${sw} · penawaran pemasangan ${eventReceived() ? "diterima" : "belum diterima"} · mode ${s.state === "installed" ? "terpasang" : "browser"}`;
   diag("memeriksa…");
   const update = () => swState().then(diag);

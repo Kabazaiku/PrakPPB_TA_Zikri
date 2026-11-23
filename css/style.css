@@ -151,10 +151,51 @@ a.stat:active{transform:scale(.98)}
 
 /* Halaman Tentang */
 .feat{list-style:none;padding:0;display:grid;gap:10px;margin-bottom:8px}
-.feat li{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
-.feat li>i{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--tint);color:var(--accent-ink);font-size:1.1rem}
+.feat li{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s}
+.feat a,.feat .static{display:flex;gap:12px;align-items:center;padding:12px 14px}
+.feat a>div,.feat .static>div{flex:1;min-width:0}
+.feat li:has(a):active{transform:scale(.99)}
+.feat a>i:first-child,.feat .static>i{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--tint);color:var(--accent-ink);font-size:1.1rem}
 .feat b{display:block}.feat span{color:var(--mute);font-size:.9rem}
 .tech{margin-top:14px}
 .tech summary{cursor:pointer;color:var(--mute);font-size:.85rem;font-weight:600}
 .tech p{margin-top:6px}
-@media (hover:hover){.tech summary:hover{color:var(--accent-ink)}}
+@media (hover:hover){.tech summary:hover{color:var(--accent-ink)}
+  .feat li:has(a):hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 10px 26px rgba(120,30,10,.16)}
+  .feat li:has(a):hover .chev{transform:translateX(3px);color:var(--accent-ink)}}
+
+/* Aksi di detail, halaman Favorit, navbar tengah */
+.row-actions{display:flex;gap:8px;flex:none}
+a.fav{text-decoration:none}
+@media (hover:hover){#v-edit:hover{color:var(--accent-ink);border-color:var(--accent)}}
+.fav-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;min-height:44px}
+.fav-head .btn{padding:9px 14px}
+.logo .bi{color:var(--accent);font-size:1.4rem}
+.bottom a.center{overflow:visible}
+.bottom a.center i{display:grid;place-items:center;width:48px;height:48px;margin-top:-22px;border-radius:50%;color:#fff;font-size:1.3rem;background:linear-gradient(135deg,#D7261E,#F26A1B);border:4px solid var(--card);box-shadow:0 4px 12px rgba(180,30,15,.4);transition:transform .15s,box-shadow .15s}
+.bottom a.center.on::before{display:none}
+.bottom a.center.on i{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent),0 4px 12px rgba(180,30,15,.4)}
+.bottom a.center:hover{background:transparent}
+@media (hover:hover){.bottom a.center:hover i{transform:scale(1.08) translateY(-2px)}}
+
+/* ---- Perapian tampilan ---- */
+/* Header & navbar selaras dengan kolom konten di layar lebar */
+.top{padding-inline:max(16px,calc((100% - 960px)/2 + 16px))}
+.bottom{padding-inline:max(0px,calc((100% - 640px)/2))}
+/* Detail kendaraan: dua kolom di layar lebar */
+@media (min-width:820px){
+  #v-content{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);column-gap:32px;align-items:start}
+  #v-content>*{grid-column:2}
+  #v-content>.hero{grid-column:1;grid-row:1/span 8;margin:0;max-width:none;position:sticky;top:76px}
+  #v-content>.row{margin-top:0}
+}
+/* Form */
+.ph-grid{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}
+.field:has([required])>label::after{content:" *";color:var(--accent-ink)}
+.hint{display:block;margin-top:4px;font-size:.85rem;color:var(--accent-ink);font-weight:700;min-height:1.2em}
+.req-note{font-size:.82rem}
+.input[type=file]{padding:7px}
+.input::file-selector-button{border:0;background:var(--tint);color:var(--tint-ink);font:inherit;font-weight:700;font-size:.88rem;padding:7px 14px;margin-right:12px;border-radius:9px;cursor:pointer;transition:filter .15s}
+@media (hover:hover){.input::file-selector-button:hover{filter:brightness(.95)}}
+.card .form{margin-top:18px}
+.tech p+p{margin-top:8px}

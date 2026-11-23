@@ -62,7 +62,10 @@ window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); 
       <div class="hero" id="v-hero" role="img" aria-label="Foto kendaraan"></div>
       <div class="row">
         <div><h2 data-b="title"></h2><span class="tag" data-b="category"></span> <span class="muted" data-b="type"></span></div>
-        <button class="fav" id="v-fav" aria-label="Favorit" aria-pressed="false"><i class="bi bi-heart"></i></button>
+        <div class="row-actions">
+          <a class="fav" id="v-edit" href="#/edit" aria-label="Edit kendaraan" title="Edit"><i class="bi bi-pencil"></i></a>
+          <button class="fav" id="v-fav" aria-label="Favorit" aria-pressed="false"><i class="bi bi-heart"></i></button>
+        </div>
       </div>
       <p class="price big" data-b="price"></p>
       <div class="specs" id="v-specs"></div>
@@ -107,13 +110,14 @@ window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); 
       <div class="field"><label for="c">Kategori</label>
         <select class="input" id="c"><option>Motor</option><option>Sepeda</option><option>Sepeda Listrik</option></select></div>
       <div class="field"><label for="t">Jenis</label><input class="input" id="t" required maxlength="30" placeholder="mis. Matic, MTB, Lipat"></div>
-      <div class="field"><label for="p">Harga (Rp)</label><input class="input" id="p" type="number" min="1" required inputmode="numeric"></div>
+      <div class="field"><label for="p">Harga (Rp)</label><input class="input" id="p" type="number" min="1" required inputmode="numeric"><span class="hint" id="p-hint" aria-live="polite"></span></div>
       <div class="field"><label for="d">Deskripsi</label><textarea class="input" id="d" maxlength="500"></textarea></div>
       <div class="field"><label>Spesifikasi</label><div id="specs"></div>
         <button type="button" class="btn ghost" id="more"><i class="bi bi-plus-lg"></i> Tambah baris</button></div>
       <fieldset class="field">
         <legend>Gambar</legend>
         <div class="ph-grid" id="ph-grid">
+        <label class="ph" id="ph-keep" hidden><input type="radio" name="ph" value="__keep"><img alt=""><b>Foto saat ini</b></label>
         <label class="ph"><input type="radio" name="ph" value="" checked><span class="ph-auto"><i class="bi bi-stars"></i></span><b>Otomatis</b></label>
         <label class="ph"><input type="radio" name="ph" value="assets/placeholders/motor-matic.svg"><img src="assets/placeholders/motor-matic.svg" alt=""><b>Motor matic</b></label>
         <label class="ph"><input type="radio" name="ph" value="assets/placeholders/motor-sport.svg"><img src="assets/placeholders/motor-sport.svg" alt=""><b>Motor sport</b></label>
@@ -126,7 +130,8 @@ window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); 
         <input class="input" id="img" type="file" accept="image/*">
         <img id="pv" class="preview" alt="Pratinjau gambar" hidden>
       </fieldset>
-      <button class="btn" id="save"><i class="bi bi-check2"></i> Simpan kendaraan</button>
+      <p class="muted req-note">* wajib diisi</p>
+      <button class="btn" id="save"><i class="bi bi-check2"></i> <span>Simpan kendaraan</span></button>
       <p class="muted" id="add-note"></p>
     </form>
   </section>
@@ -145,11 +150,22 @@ window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); 
         <p class="muted"><i class="bi bi-phone"></i> Disimpan hanya di perangkat ini (localStorage), bukan di server.</p>
       </div>
     </div>
-    <h2>Favorit saya (<span id="fav-count">0</span>)</h2>
+    <a class="item brand-item" href="#/favorites">
+      <div class="logo"><i class="bi bi-heart-fill"></i></div>
+      <div class="body"><h3>Favorit saya</h3><div class="muted"><span id="p-fav-count">0</span> kendaraan tersimpan</div></div>
+      <i class="bi bi-chevron-right chev"></i>
+    </a>
+  </section>
+
+  <!-- Favorit -->
+  <section class="page" id="page-favorites" hidden>
+    <div class="fav-head">
+      <p class="muted"><span id="fav-count">0</span> kendaraan favorit</p>
+      <button class="btn danger" id="clr" hidden><i class="bi bi-trash"></i> Hapus semua</button>
+    </div>
     <div class="grid" id="fav-list"></div>
     <p class="empty" id="fav-empty" hidden>Belum ada favorit.<br>Ketuk ikon hati di halaman detail, atau <a href="#/">lihat katalog</a>.</p>
     <div class="pager-slot" id="fav-pager"></div>
-    <p><button class="btn danger" id="clr" hidden><i class="bi bi-trash"></i> Hapus semua favorit</button></p>
   </section>
 
   <!-- Tentang aplikasi -->
@@ -159,24 +175,25 @@ window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); 
 
     <h2>Yang bisa Anda lakukan</h2>
     <ul class="feat">
-      <li><i class="bi bi-search"></i><div><b>Cari dan saring</b><span>Ketik nama kendaraan atau pilih kategori Motor, Sepeda, dan Sepeda Listrik di Beranda.</span></div></li>
-      <li><i class="bi bi-card-list"></i><div><b>Lihat detail</b><span>Harga, jenis, deskripsi, dan spesifikasi lengkap tiap kendaraan.</span></div></li>
-      <li><i class="bi bi-tags"></i><div><b>Jelajahi merek</b><span>Lihat semua model dari satu merek lewat halaman Merek.</span></div></li>
-      <li><i class="bi bi-heart"></i><div><b>Simpan favorit</b><span>Ketuk ikon hati di halaman detail. Favorit dan profil Anda tersimpan di perangkat ini, tanpa perlu akun.</span></div></li>
-      <li><i class="bi bi-plus-circle"></i><div><b>Tambah kendaraan</b><span>Gunakan tombol Tambah di Beranda untuk menambahkan kendaraan baru, lengkap dengan foto atau ilustrasi pilihan Anda.</span></div></li>
-      <li><i class="bi bi-wifi-off"></i><div><b>Tetap bisa dibuka offline</b><span>Setelah dibuka sekali, katalog tetap tampil tanpa internet.</span></div></li>
+      <li><a href="#/"><i class="bi bi-search"></i><div><b>Cari dan saring</b><span>Ketik nama kendaraan atau pilih kategori Motor, Sepeda, dan Sepeda Listrik di Beranda.</span></div><i class="bi bi-chevron-right chev"></i></a></li>
+      <li><a href="#/random"><i class="bi bi-card-list"></i><div><b>Lihat detail</b><span>Harga, jenis, deskripsi, dan spesifikasi lengkap tiap kendaraan. Ketuk untuk melihat contoh.</span></div><i class="bi bi-chevron-right chev"></i></a></li>
+      <li><a href="#/brands"><i class="bi bi-tags"></i><div><b>Jelajahi merek</b><span>Lihat semua model dari satu merek lewat halaman Merek.</span></div><i class="bi bi-chevron-right chev"></i></a></li>
+      <li><a href="#/favorites"><i class="bi bi-heart"></i><div><b>Simpan favorit</b><span>Ketuk ikon hati di halaman detail. Favorit dan profil Anda tersimpan di perangkat ini, tanpa perlu akun.</span></div><i class="bi bi-chevron-right chev"></i></a></li>
+      <li><a href="#/add"><i class="bi bi-plus-circle"></i><div><b>Tambah kendaraan</b><span>Tambahkan kendaraan baru dengan foto atau ilustrasi pilihan Anda. Kendaraan yang sudah ada bisa diedit dari halaman detailnya.</span></div><i class="bi bi-chevron-right chev"></i></a></li>
+      <li><div class="static"><i class="bi bi-wifi-off"></i><div><b>Tetap bisa dibuka offline</b><span>Setelah dibuka sekali, katalog tetap tampil tanpa internet.</span></div></div></li>
     </ul>
 
     <div class="card"><h2>Pasang aplikasi</h2>
       <p id="inst-msg"></p>
       <button class="btn" id="inst2" hidden><i class="bi bi-download"></i> Pasang sekarang</button>
-      <details class="tech"><summary>Detail teknis</summary><p class="muted" id="inst-diag"></p></details></div>
+      <details class="tech"><summary>Bantuan dan detail teknis</summary><p class="muted" id="inst-help"></p><p class="muted" id="inst-diag"></p></details></div>
   </section>
 </main>
 
 <nav class="bottom" aria-label="Navigasi utama">
   <a href="#/" data-nav="home"><i class="bi bi-house-door"></i>Beranda</a>
   <a href="#/brands" data-nav="brands"><i class="bi bi-tags"></i>Merek</a>
+  <a href="#/favorites" data-nav="favorites" class="center"><i class="bi bi-heart-fill"></i>Favorit</a>
   <a href="#/profile" data-nav="profile"><i class="bi bi-person"></i>Profil</a>
   <a href="#/about" data-nav="about"><i class="bi bi-info-circle"></i>Tentang</a>
 </nav>

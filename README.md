@@ -20,17 +20,17 @@ wheelie/
 │  ├─ lib/               dom, storage, format, image, pager
 │  ├─ data/              state, api (Supabase/lokal), demo
 │  ├─ components/        cards (kartu kendaraan/merek, logo, gambar)
-│  └─ pages/             home, brands, vehicle, brand, add, profile, about
+│  └─ pages/             home, brands, vehicle, brand, add (tambah+edit), favorites, profile, about
 ├─ assets/
 │  ├─ icons/             ikon PWA (svg, png 192/512, maskable, apple-touch)
 │  ├─ logos/             logo merek: honda, yamaha, suzuki (.svg)
 │  └─ placeholders/      6 ilustrasi kendaraan (.svg)
 ├─ scripts/build-config.js   .env -> js/config.js
-└─ sql/                  01-schema, 02-upload-policies, 03-migrasi-logo
+└─ sql/                  01-schema, 02-upload-policies, 03-migrasi-logo, 04-edit-policies
 ```
 
 ## Menjalankan
-1. Supabase > SQL Editor: jalankan `sql/01-schema.sql`, lalu `sql/02-upload-policies.sql`.
+1. Supabase > SQL Editor: jalankan `sql/01-schema.sql`, `sql/02-upload-policies.sql`, lalu `sql/04-edit-policies.sql` (agar kendaraan bisa diedit).
    (Database lama tanpa kolom `logo_url`: jalankan `sql/03-migrasi-logo.sql`.)
 2. `cp .env.example .env` (nama persis `.env`, satu folder dengan `package.json`), isi `SUPABASE_URL` dan `SUPABASE_ANON_KEY` tanpa tanda kutip. Jangan pakai service_role key. Setelah mengubah `.env`, jalankan ulang `npm start`.
 3. `npm start` lalu buka http://localhost:3000. Tidak bisa dibuka lewat file://, ES modules dan service worker butuh server.
@@ -46,6 +46,9 @@ Tanpa `.env`, aplikasi berjalan dengan data demo.
 Jika variabel kosong, situs tetap tampil tetapi memakai data demo. Log build menampilkan PERINGATAN.
 
 Netlify: Build command `npm run build`, Publish directory `public`.
+
+## Edit kendaraan
+Buka detail kendaraan, ketuk ikon pensil. Nama, merek, kategori, jenis, harga, deskripsi, spesifikasi, dan gambar bisa diubah. Di Supabase fitur ini butuh `sql/04-edit-policies.sql`. Catatan: tanpa login, siapa pun yang memegang anon key bisa mengedit; untuk produksi tambahkan Supabase Auth.
 
 ## Logo merek
 Aplikasi mencari `assets/logos/<nama>.svg`, lalu `.png`, lalu `.webp` (nama = nama merek huruf kecil tanpa spasi, mis. `polygon.png`). Tidak perlu mendaftarkan apa pun di kode. Bisa juga mengisi kolom `logo_url` di tabel `brands`, atau mengunggah logo saat menambah merek baru lewat form Tambah. Jika logo tidak ada, ditampilkan huruf awal pada kotak berwarna.

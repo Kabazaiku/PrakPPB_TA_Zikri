@@ -29,6 +29,7 @@ export function show(id){
   $("#v-specs").replaceChildren(...specs.map(([k, val]) => { const e = clone("tpl-spec"); bind(e, {k, v: val}); return e; }));
   $("#v-specs").hidden = !specs.length;
   $("#v-brand").href = b ? "#/brand/" + b.id : "#/brands"; setLogo($("#v-brand .logo"), b);
+  $("#v-edit").href = "#/edit/" + v.id;
   setFav();
   return v.name;
 }
